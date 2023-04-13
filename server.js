@@ -21,6 +21,7 @@ app.set('view engine', 'ejs')
 
 // app.use('/', indexRouter)
 app.use('/skills', skillsRouter)
+app.use(express.urlencoded({ extended: false }))
 
 // mount routes
 
