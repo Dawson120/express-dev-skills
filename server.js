@@ -2,24 +2,32 @@
 
 import "dotenv/config.js"
 import express from 'express'
-// import { skills } from '../data/skill-data.js'
 import logger from 'morgan'
 import './config/database.js'
-// import { router as indexRouter } from './routes/index.js'
-import { router as skillsRouter } from './routes/skills.js'
 
 
 // connect to the database with Mongoose
+
+import { router as indexRouter } from './routes/index.js'
+import { router as skillsRouter } from './routes/skills.js'
+
 // create Express app
 
 const app = express()
 
 // Configure the app (app.set)
+
 app.set('view engine', 'ejs')
 
-// mount Middleware (app.use)
+// add middleware below the above line of code
 
-// app.use('/', indexRouter)
+app.use(function(req, res, next) {
+  console.log('Hello SEI!')
+  next()
+})
+
+app.use('/', indexRouter)
+
 app.use('/skills', skillsRouter)
 app.use(express.urlencoded({ extended: false }))
 
@@ -27,11 +35,7 @@ app.use(express.urlencoded({ extended: false }))
 
 
 app.get('/', function(req, res) {
-    res.render('home')
-  })
-
-app.get('/home', function(req, res) {
-    res.render('home')
+    res.redirect('/index')
   })
 
 app.get('/skills', function(req, res) {
